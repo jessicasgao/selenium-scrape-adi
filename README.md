@@ -7,7 +7,7 @@ Unfortunately, getting each state's zip code level data requires a separate down
 - Navigate to data downloads page
 - Download each of the 50 states' zipped data file
 - Unzip all files to a specified location and check for completion
-- Append each state's data into a single zip file for easy data analysis; and
+- Append each state's data into a single .csv file for easy data analysis; and
 - Remove separate state files.
 
 ## Getting Started
