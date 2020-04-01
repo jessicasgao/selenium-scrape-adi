@@ -1,0 +1,6 @@
+{   "download_dir" : "local/download/folder",
+    "download_subfolder_dir": "local/download/folder/adi/subfolder",
+    "output_dir": "output/dir/here",
+    "password": "password",
+    "username": "username"
+  }
