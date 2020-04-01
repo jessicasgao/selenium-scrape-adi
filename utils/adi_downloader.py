@@ -1,5 +1,6 @@
 import csv
 import glob
+import json
 import os
 import pandas as pd
 import time
@@ -108,12 +109,3 @@ def download_adi(download_dir, download_subfolder_dir, output_dir, password, use
         for f in files:
             os.remove(f)
         os.rmdir(adi_folder)
-
-if __name__ == "__main__":
-    config = load_config(config_name)
-
-    download_adi(config["download_dir"],
-                 config["download_subfolder_dir"],
-                 config["output_dir"],
-                 config["password"],
-                 config["username"])
