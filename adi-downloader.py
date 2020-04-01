@@ -6,19 +6,35 @@ import glob
 import pandas as pd
 import time
 
-def download_adi():
+def load_config(json_file):
+    """Loads config file.
+    
+    Arguments:
+        json_file {str} -- The relative file path of the config file.
+    
+    Returns:
+        dict -- A dictionary of all config elements.
+    """
+
+    with open(json_file) as config_file:
+        config = json.load(config_file)
+    return config
+
+def download_adi(download_dir, download_subfolder_dir, output_dir, password, username):
 
     """Scrape 50 zipped files from Area Deprivation Index website and append into a single csv file.
 
     Args:
-        [No args.]
-
+        download_dir {str} -- Local download directory.
+        download_subfolder_dir {str} -- Subfolder to extract zip files into within local download directory.
+        output_dir {str} -- Directory to save final csv output.
+        password {str} -- ADI website account password.
+        username {str} -- ADI website account username.
+    
     Returns:
         [No returned object.]
 
     """
-
-    output_dir = r'output/dir/here'
 
     # Log into ADI website
     driver = webdriver.Chrome()
@@ -26,11 +42,11 @@ def download_adi():
 
     username = driver.find_element_by_id("login-email")
     username.clear()
-    username.send_keys("type-username-here")
+    username.send_keys(username)
 
     password = driver.find_element_by_id("login-pass")
     password.clear()
-    password.send_keys("type-password-here")
+    password.send_keys(password)
 
     # Navigate to ADI data page and download each of 50 states
     driver.find_element_by_css_selector('.form-items.small-box').click()
@@ -47,10 +63,9 @@ def download_adi():
     driver.quit()
 
     # Create subfolder to unzip downloaded data zips into 
-    adi_folder = 'local/download/folder/adi/subfolder'
-    if not os.path.exists(adi_folder):
-        os.makedirs(adi_folder)
-    dir_name = 'local/download/folder'
+    if not os.path.exists(download_subfolder_dir):
+        os.makedirs(download_subfolder_dir)
+    dir_name = download_dir
     extension = ".zip"
     prefix = "adi-download"
 
@@ -62,7 +77,7 @@ def download_adi():
         if item.endswith(extension) & item.startswith(prefix): # check for ".zip" extension
             file_name = os.path.abspath(item) # get full path of files
             zip_ref = zipfile.ZipFile(file_name) # create zipfile object
-            zip_ref.extractall(adi_folder) # extract file to dir
+            zip_ref.extractall(download_subfolder_dir) # extract file to dir
             zip_ref.close() # close file
             os.remove(file_name) # delete zipped file
 
@@ -94,4 +109,10 @@ def download_adi():
         os.rmdir(adi_folder)
 
 if __name__ == "__main__":
-    download_adi()
+    config = load_config(config_name)
+
+    download_adi(config["download_dir"],
+                 config["download_subfolder_dir"],
+                 config["output_dir"],
+                 config["password"],
+                 config["username"])
