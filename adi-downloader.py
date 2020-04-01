@@ -1,10 +1,11 @@
-from selenium import webdriver
-from selenium.webdriver.support.ui import Select
-import os, zipfile
 import csv
 import glob
+import os
 import pandas as pd
 import time
+import zipfile
+from selenium import webdriver
+from selenium.webdriver.support.ui import Select
 
 def load_config(json_file):
     """Loads config file.
