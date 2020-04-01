@@ -2,6 +2,14 @@
 
 The Area Deprivation Index (ADI) is a national and statewide index that ranks neighborhoods (FIPS and zip codes) by level of socioeconomic disadvantage. The ADI is increasingly found in literature and used by healthcare researchers to evaluate equity in health outcomes by geographic location.
 
+Unfortunately, getting each state's zip code level data requires a separate download process. This repo uses Python selenium to automate the entire process:
+- Log into the website
+- Navigate to data downloads page
+- Download each of the 50 states' zipped data file
+- Unzip all files to a specified location and check for completion
+- Append each state's data into a single zip file for easy data analysis; and
+- Remove separate state files.
+
 ## Getting Started
 
 Make sure to use best practices when editing the repository:
